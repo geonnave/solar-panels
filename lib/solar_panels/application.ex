@@ -11,7 +11,7 @@ defmodule SolarPanels.Application do
       # Start the endpoint when the application starts
       supervisor(SolarPanelsWeb.Endpoint, []),
       # Start your own worker by calling: SolarPanels.Worker.start_link(arg1, arg2, arg3)
-      # worker(SolarPanels.Worker, [arg1, arg2, arg3]),
+      {SolarPanels.Random, []},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
