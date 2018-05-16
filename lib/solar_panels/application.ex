@@ -12,7 +12,10 @@ defmodule SolarPanels.Application do
       supervisor(SolarPanelsWeb.Endpoint, []),
       # Start your own worker by calling: SolarPanels.Worker.start_link(arg1, arg2, arg3)
       {SolarPanels.Random, []},
+      {SolarPanels.Serial, []},
     ]
+
+    SolarPanels.configure_data_source(:random)
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

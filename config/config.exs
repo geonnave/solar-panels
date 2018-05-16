@@ -18,9 +18,10 @@ config :solar_panels,
   data_source: SolarPanels.Random
 
 # Configures Elixir's Logger
+config :logger, :level, :debug
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  metadata: [:module]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
