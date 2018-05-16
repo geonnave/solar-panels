@@ -1,4 +1,4 @@
-defmodule SolarPanelsWeb.RoomChannel do
+defmodule SolarPanelsWeb.PanelsChannel do
   use SolarPanelsWeb, :channel
 
   def join("panels:random", payload, socket) do
@@ -19,10 +19,5 @@ defmodule SolarPanelsWeb.RoomChannel do
   def handle_in("shout", payload, socket) do
     broadcast socket, "shout", payload
     {:noreply, socket}
-  end
-
-  # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
   end
 end

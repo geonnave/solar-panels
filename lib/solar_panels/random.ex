@@ -12,7 +12,7 @@ defmodule SolarPanels.Random do
   end
 
   def handle_info(:broadcast, state) do
-    Logger.debug "will broadcast"
+    Logger.info "will broadcast"
     SolarPanelsWeb.Endpoint.broadcast! "panels:random", "value", %{
       "current" => %{"value" => :rand.uniform(), "timestamp" => SolarPanels.now_unix()},
       "voltage" => %{"value" => :rand.uniform(), "timestamp" => SolarPanels.now_unix()}

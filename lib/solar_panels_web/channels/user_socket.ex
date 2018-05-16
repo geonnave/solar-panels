@@ -3,7 +3,7 @@ defmodule SolarPanelsWeb.UserSocket do
 
   ## Channels
   # channel "room:*", SolarPanelsWeb.RoomChannel
-  channel "panels:*", SolarPanelsWeb.RoomChannel
+  channel "panels:*", SolarPanelsWeb.PanelsChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

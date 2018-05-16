@@ -32,7 +32,7 @@ defmodule SolarPanels.Serial do
   end
 
   def handle_info({:nerves_uart, port, data}, state = {port, pid}) do
-    Logger.debug "will broadcast #{data}"
+    Logger.info "will broadcast #{data}"
     case Poison.decode(data) do
       {:ok, data} ->
         SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", %{
