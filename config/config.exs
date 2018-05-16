@@ -13,6 +13,10 @@ config :solar_panels, SolarPanelsWeb.Endpoint,
   pubsub: [name: SolarPanels.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :solar_panels,
+  port: "ttyUSB0",
+  data_source: SolarPanels.Random
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

@@ -1,3 +1,3 @@
 
-<canvas height="120" id="current"></canvas>
-<canvas height="120" id="voltage"></canvas>
+<canvas height="75" id="current"></canvas>
+<canvas height="75" id="voltage"></canvas>

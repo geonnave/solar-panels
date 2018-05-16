@@ -38,10 +38,6 @@ var makeChart = function(id, label, borderColor, backgroundColor) {
           ]
       },
       options: {
-          title: {
-              text: 'Painel Solar #1', // chart title
-              display: true
-          },
           scales: {
               xAxes: [{
                   type: 'realtime' // auto-scroll on X axis
