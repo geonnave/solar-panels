@@ -15,8 +15,6 @@ defmodule SolarPanels.Application do
       {SolarPanels.Serial, []},
     ]
 
-    SolarPanels.configure_data_source(:random)
-
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SolarPanels.Supervisor]

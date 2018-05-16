@@ -1,28 +1,51 @@
 import "phoenix_html"
 import socket from "./socket"
 
-var buf = {};
-buf['current'] = [];
-buf['voltage'] = [];
+var panels = {
+  "random": {
+    "name": 'panels:random',
+    "idAappend": '-random',
+    "channel": socket.channel('panels:random', {}),
+    "buf": {
+      "current": [],
+      "voltage": []
+    }
+  },
+  "real": {
+    "name": 'panels:real',
+    "idAappend": '-real',
+    "channel": socket.channel('panels:real', {}),
+    "buf": {
+      "current": [],
+      "voltage": []
+    }
+  }
+};
 
-var channel = socket.channel('room:lobby', {}); // connect to chat "room"
+var channelOn = function(panel) {
+  panels[panel].channel.on('value', function (payload) {
+    console.log(panels[panel].buf)
+    console.log(payload)
 
-channel.on('value', function (payload) {
-  console.log(payload)
+    panels[panel].buf.current.push({
+      x: payload.current.timestamp * 1000,
+      y: payload.current.value
+    });
 
-  buf['current'].push({
-    x: payload.current.timestamp * 1000,
-    y: payload.current.value
+    panels[panel].buf.voltage.push({
+      x: payload.voltage.timestamp * 1000,
+      y: payload.voltage.value
+    });
   });
+}
 
-  buf['voltage'].push({
-    x: payload.voltage.timestamp * 1000,
-    y: payload.voltage.value
-  });
-});
+channelOn("random");
+channelOn("real");
 
-var makeChart = function(id, label, borderColor, backgroundColor) {
+var makeChart = function(buf_name, label, borderColor, backgroundColor, panel) {
+  var id = buf_name + panels[panel].idAappend;
   var ctx = document.getElementById(id).getContext('2d');
+  console.log(ctx)
   var chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -48,9 +71,9 @@ var makeChart = function(id, label, borderColor, backgroundColor) {
                   duration: 1000 * 60,
                   onRefresh: function(chart) {
                       Array.prototype.push.apply(
-                          chart.data.datasets[0].data, buf[id]
+                          chart.data.datasets[0].data, panels[panel].buf[buf_name]
                       );
-                      buf[id] = [];
+                      panels[panel].buf[buf_name] = [];
                   }
               }
           }
@@ -58,9 +81,12 @@ var makeChart = function(id, label, borderColor, backgroundColor) {
   });
 }
 
-channel.join(); // join the channel.
-makeChart('current', "Corrente", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)');
-makeChart('voltage', "Voltagem", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)');
+panels.random.channel.join();
+panels.real.channel.join();
+makeChart('current', "Corrente", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "random");
+makeChart('voltage', "Voltagem", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "random");
+makeChart('current', "Corrente", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real");
+makeChart('voltage', "Voltagem", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real");
 
 
 

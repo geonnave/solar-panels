@@ -32,15 +32,18 @@ defmodule SolarPanels.Serial do
   end
 
   def handle_info({:nerves_uart, port, data}, state = {port, pid}) do
-    if Application.get_env(:solar_panels, :data_source) == __MODULE__ do
-      Logger.debug "will broadcast #{data}"
-      data = Poison.decode!(data)
-      SolarPanelsWeb.Endpoint.broadcast! "room:lobby", "value", %{
-        "current" => %{"value" => data["current"], "timestamp" => SolarPanels.now_unix()},
-        "voltage" => %{"value" => data["voltage"], "timestamp" => SolarPanels.now_unix()}
-      }
-      Process.send_after(__MODULE__, :broadcast, 3_000)
+    Logger.debug "will broadcast #{data}"
+    case Poison.decode(data) do
+      {:ok, data} ->
+        SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", %{
+          "current" => %{"value" => data["current"], "timestamp" => SolarPanels.now_unix()},
+          "voltage" => %{"value" => data["voltage"], "timestamp" => SolarPanels.now_unix()}
+        }
+      
+      {:error, reason} ->
+        Logger.warn "Could not parse data because of reason #{inspect reason}"
     end
+    Process.send_after(__MODULE__, :broadcast, 3_000)
     {:noreply, state}
   end
 

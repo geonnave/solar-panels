@@ -1,12 +1,11 @@
 defmodule SolarPanelsWeb.RoomChannel do
   use SolarPanelsWeb, :channel
 
-  def join("room:lobby", payload, socket) do
-    if authorized?(payload) do
-      {:ok, socket}
-    else
-      {:error, %{reason: "unauthorized"}}
-    end
+  def join("panels:random", payload, socket) do
+    {:ok, socket}
+  end
+  def join("panels:real", payload, socket) do
+    {:ok, socket}
   end
 
   # Channels can be used in a request/response fashion
