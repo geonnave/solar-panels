@@ -10,14 +10,25 @@ defmodule SolarPanels.Serial do
     GenServer.cast __MODULE__, :close_port
   end
 
+  def open_port do
+    GenServer.cast __MODULE__, :open_port
+  end
+
   def init(_opts) do
     case find_and_open_port() do
       {:ok, port_info} ->
         {:ok, port_info}
 
       _ ->
-      {:stop, "port not found"}
+        Logger.info "Serial started, but serial port was not found."
+        {:ok, nil}
     end
+  end
+
+  def handle_info({:nerves_uart, port, {:error, _}}, state = {port, pid}) do
+    Logger.warn "Serial disconnected. Switchting to random."
+    SolarPanels.configure_data_source(:random)
+    {:noreply, state}
   end
 
   def handle_info({:nerves_uart, port, data}, state = {port, pid}) do
@@ -41,6 +52,17 @@ defmodule SolarPanels.Serial do
   def handle_cast(:close_port, {_port, pid}) do
     Nerves.UART.close(pid)
     {:noreply, nil}
+  end
+
+  def handle_cast(:open_port, _state) do
+    case find_and_open_port() do
+      {:ok, port_info} ->
+        {:noreply, port_info}
+
+      _ ->
+        Logger.info "Could not find and open port"
+        {:noreply, nil}
+    end
   end
 
   def find_and_open_port do
