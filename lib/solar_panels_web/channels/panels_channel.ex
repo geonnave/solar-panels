@@ -1,10 +1,10 @@
 defmodule SolarPanelsWeb.PanelsChannel do
   use SolarPanelsWeb, :channel
 
-  def join("panels:random", payload, socket) do
+  def join("panels:random", _payload, socket) do
     {:ok, socket}
   end
-  def join("panels:real", payload, socket) do
+  def join("panels:real", _payload, socket) do
     {:ok, socket}
   end
 

@@ -13,10 +13,11 @@ defmodule SolarPanels.Random do
 
   def handle_info(:broadcast, state) do
     Logger.info "will broadcast"
-    SolarPanelsWeb.Endpoint.broadcast! "panels:random", "value", %{
+    payload = %{
       "current" => %{"value" => :rand.uniform(), "timestamp" => SolarPanels.now_unix()},
       "voltage" => %{"value" => :rand.uniform(), "timestamp" => SolarPanels.now_unix()}
     }
+    SolarPanelsWeb.Endpoint.broadcast! "panels:random", "value", payload
     Process.send_after(__MODULE__, :broadcast, 3_000)
     {:noreply, state}
   end

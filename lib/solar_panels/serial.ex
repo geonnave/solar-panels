@@ -2,7 +2,7 @@ defmodule SolarPanels.Serial do
   use GenServer
   require Logger
 
-  def start_link(opts) do
+  def start_link(_opts) do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
@@ -25,20 +25,20 @@ defmodule SolarPanels.Serial do
     end
   end
 
-  def handle_info({:nerves_uart, port, {:error, _}}, state = {port, pid}) do
+  def handle_info({:nerves_uart, _, {:error, _}}, state) do
     Logger.warn "Serial disconnected. Switchting to random."
-    SolarPanels.configure_data_source(:random)
     {:noreply, state}
   end
 
-  def handle_info({:nerves_uart, port, data}, state = {port, pid}) do
+  def handle_info({:nerves_uart, _, data}, state) do
     Logger.info "will broadcast #{data}"
     case Poison.decode(data) do
       {:ok, data} ->
-        SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", %{
+        payload = %{
           "current" => %{"value" => data["current"], "timestamp" => SolarPanels.now_unix()},
           "voltage" => %{"value" => data["voltage"], "timestamp" => SolarPanels.now_unix()}
         }
+        SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", payload
       
       {:error, reason} ->
         Logger.warn "Could not parse data because of reason #{inspect reason}"
@@ -90,7 +90,7 @@ defmodule SolarPanels.Serial do
 
   def find_serial_4292(available_ports) do
     available_ports
-    |> Enum.filter(fn {port, info} ->
+    |> Enum.filter(fn {_port, info} ->
       check_vendor_and_product_id(info)
     end)
   end

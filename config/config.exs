@@ -14,8 +14,7 @@ config :solar_panels, SolarPanelsWeb.Endpoint,
            adapter: Phoenix.PubSub.PG2]
 
 config :solar_panels,
-  port: "ttyUSB0",
-  data_source: SolarPanels.Random
+  port: "ttyUSB0"
 
 # Configures Elixir's Logger
 config :logger, :level, :debug

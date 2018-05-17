@@ -6,7 +6,7 @@ var panels = {
     "name": 'panels:random',
     "idAappend": '-random',
     "channel": socket.channel('panels:random', {}),
-    "buf": {
+    "buffer": {
       "current": [],
       "voltage": []
     }
@@ -15,7 +15,7 @@ var panels = {
     "name": 'panels:real',
     "idAappend": '-real',
     "channel": socket.channel('panels:real', {}),
-    "buf": {
+    "buffer": {
       "current": [],
       "voltage": []
     }
@@ -24,15 +24,15 @@ var panels = {
 
 var channelOn = function(panel) {
   panels[panel].channel.on('value', function (payload) {
-    console.log(panels[panel].buf)
+    console.log(panels[panel].buffer)
     console.log(payload)
 
-    panels[panel].buf.current.push({
+    panels[panel].buffer.current.push({
       x: payload.current.timestamp * 1000,
       y: payload.current.value
     });
 
-    panels[panel].buf.voltage.push({
+    panels[panel].buffer.voltage.push({
       x: payload.voltage.timestamp * 1000,
       y: payload.voltage.value
     });
@@ -42,8 +42,8 @@ var channelOn = function(panel) {
 channelOn("random");
 channelOn("real");
 
-var makeChart = function(buf_name, label, borderColor, backgroundColor, panel) {
-  var id = buf_name + panels[panel].idAappend;
+var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel) {
+  var id = buffer_name + panels[panel].idAappend;
   var ctx = document.getElementById(id).getContext('2d');
   console.log(ctx)
   var chart = new Chart(ctx, {
@@ -71,9 +71,9 @@ var makeChart = function(buf_name, label, borderColor, backgroundColor, panel) {
                   duration: 1000 * 60,
                   onRefresh: function(chart) {
                       Array.prototype.push.apply(
-                          chart.data.datasets[0].data, panels[panel].buf[buf_name]
+                          chart.data.datasets[0].data, panels[panel].buffer[buffer_name]
                       );
-                      panels[panel].buf[buf_name] = [];
+                      panels[panel].buffer[buffer_name] = [];
                   }
               }
           }
