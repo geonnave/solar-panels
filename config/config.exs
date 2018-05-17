@@ -17,7 +17,7 @@ config :solar_panels,
   port: "ttyUSB0"
 
 # Configures Elixir's Logger
-config :logger, :level, :debug
+config :logger, :level, :info
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:module]

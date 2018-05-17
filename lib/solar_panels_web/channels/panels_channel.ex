@@ -7,6 +7,9 @@ defmodule SolarPanelsWeb.PanelsChannel do
   def join("panels:real", _payload, socket) do
     {:ok, socket}
   end
+  def join("panels:aggregated", _payload, socket) do
+    {:ok, socket}
+  end
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client

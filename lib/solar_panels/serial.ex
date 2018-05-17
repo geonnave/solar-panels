@@ -31,7 +31,7 @@ defmodule SolarPanels.Serial do
   end
 
   def handle_info({:nerves_uart, _, data}, state) do
-    Logger.info "will broadcast #{data}"
+    Logger.debug "will broadcast #{data}"
     case Poison.decode(data) do
       {:ok, data} ->
         payload = %{
@@ -39,7 +39,7 @@ defmodule SolarPanels.Serial do
           "voltage" => %{"value" => data["voltage"], "timestamp" => SolarPanels.now_unix()}
         }
         SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", payload
-      
+
       {:error, reason} ->
         Logger.warn "Could not parse data because of reason #{inspect reason}"
     end

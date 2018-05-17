@@ -19,8 +19,9 @@ defmodule SolarPanelsWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SolarPanelsWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SolarPanelsWeb do
+    pipe_through :api
+
+    post "/solar_panels/:id/sensor_readings", SensorReadingsController, :create
+  end
 end
