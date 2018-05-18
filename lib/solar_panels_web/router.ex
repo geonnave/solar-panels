@@ -13,10 +13,10 @@ defmodule SolarPanelsWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", SolarPanelsWeb do
+  scope "/solar", SolarPanelsWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/solar", PageController, :index
+    get "/", PageController, :index
   end
 
   scope "/api", SolarPanelsWeb do
