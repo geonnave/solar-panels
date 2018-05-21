@@ -24,7 +24,6 @@ var panels = {
 
 var channelOn = function(panel) {
   panels[panel].channel.on('value', function (payload) {
-    console.log(panels[panel].buffer)
     console.log(payload)
 
     panels[panel].buffer.current.push({
