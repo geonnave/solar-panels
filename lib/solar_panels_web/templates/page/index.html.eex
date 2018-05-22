@@ -15,9 +15,8 @@
 	</div>
 	<div class="ui bottom attached  tab segment" data-tab="about">
 		<div class="ui grid">
-		  <div class="ten wide column">
-			<h2>Aplicação Painéis Solares by Caninos Loucos.</h3>
-			<%# <span class="header">Solução Completa</span> %>
+		  <div class="six wide column">
+			<h2>Aplicação Painéis Solares by Caninos Loucos</h3>
 			<div class="meta">
 				<span></span>
 			</div>
@@ -28,7 +27,7 @@
 				<%# Additional Details %>
 			</div>
 		  </div>
-		  <div class="six wide column">
+		  <div class="ten wide column">
 			<img width="100%" src="<%= static_path(@conn, "/solar/images/complete.jpg") %>">
 		  </div>
 		</div>
@@ -58,7 +57,7 @@
 						<span></span>
 					</div>
 					<div class="description">
-						<p>Placa desenvolvida pelo LSI-TEC para medição de Corrente, Voltagem e Temperatura de painéis solares. Além de ser alimentada pela própria energia gerada pelo painel solar, esta placa também recarrega, automaticamente, de uma bateria de backup acoplaca ao sistema.</p>
+						<p>Placa desenvolvida pelo LSI-TEC para medição de Corrente, Voltagem e Temperatura de painéis solares. Além de ser alimentada pela própria energia gerada pelo painel solar, esta placa também recarrega automaticamente uma bateria de backup acoplada ao sistema.</p>
 					</div>
 				</div>
 			</div>
