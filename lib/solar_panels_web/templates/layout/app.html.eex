@@ -16,7 +16,14 @@
 
   <body>
     <div class="ui container" style="max-width: 960px; margin: 0 auto">
-      <h1 class="ui header" style="margin-top: 20px">Paneis Solares USP</h1>
+          <div class="ui grid">
+            <div class="ten wide column" style="margin-top: 20px">
+              <h1 class="ui header" >Paneis Solares by Caninos</h1>
+            </div>
+            <div class="six wide column" style="margin-top: 10px">
+              <img width="50%" style="float: right;" src="<%= static_path(@conn, "/solar/images/logocaninos.svg") %>">
+            </div>
+          </div>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>

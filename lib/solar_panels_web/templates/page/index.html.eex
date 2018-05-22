@@ -1,15 +1,81 @@
 
 <div class="ui container">
 	<div class="ui top attached tabular menu">
-	  <a class="active item" data-tab="first">Painel Real</a>
-	  <a class="item" data-tab="second">Simulação</a>
+		<a class="active item" data-tab="real">Painel Solar</a>
+		<%# <a class="item" data-tab="random">Simulação</a> %>
+		<a class="item" data-tab="about">Sobre</a>
 	</div>
-	<div class="ui bottom attached active tab segment" data-tab="first">
+	<div class="ui bottom attached active tab segment" data-tab="real">
 		<canvas height="75" id="current-real"></canvas>
 		<canvas height="75" id="voltage-real"></canvas>
 	</div>
-	<div class="ui bottom attached tab segment" data-tab="second">
+	<div class="ui bottom attached tab segment" data-tab="random">
 		<canvas height="75" id="current-random"></canvas>
 		<canvas height="75" id="voltage-random"></canvas>
+	</div>
+	<div class="ui bottom attached  tab segment" data-tab="about">
+		<div class="ui grid">
+		  <div class="ten wide column">
+			<h2>Aplicação Painéis Solares by Caninos Loucos.</h3>
+			<%# <span class="header">Solução Completa</span> %>
+			<div class="meta">
+				<span></span>
+			</div>
+			<div class="description">
+				<p>Painel solar monitorado em tempo real integrado com uma placa Labrador, que realiza a coleta e processamento, além de prover visualização em tempo real dos dados.</p>
+			</div>
+			<div class="extra">
+				<%# Additional Details %>
+			</div>
+		  </div>
+		  <div class="six wide column">
+			<img width="100%" src="<%= static_path(@conn, "/solar/images/complete.jpg") %>">
+		  </div>
+		</div>
+		<div class="ui divider"></div>
+		<div class="ui items">
+			<div class="item">
+				<div class="image" style="width: 300px">
+					<img src="<%= static_path(@conn, "/solar/images/labrador2.jpg") %>">
+				</div>
+				<div class="content">
+					<span class="header">Placa Labrador</span>
+					<div class="meta">
+						<span></span>
+					</div>
+					<div class="description">
+						<p>A primeira SBC (Single Board Computer) aberta projetada e fabricada no Brasil. Seu papel no projeto inclui a coleta e armazenamento de dados de uma ou mais placas medidoras, e a exibição dos dados em tempo real através de uma interface web.</p>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="image" style="width: 300px">
+					<img src="<%= static_path(@conn, "/solar/images/monitoring.jpg") %>">
+				</div>
+				<div class="content">
+					<span class="header">Placa de monitoramento</span>
+					<div class="meta">
+						<span></span>
+					</div>
+					<div class="description">
+						<p>Placa desenvolvida pelo LSI-TEC para medição de Corrente, Voltagem e Temperatura de painéis solares. Além de ser alimentada pela própria energia gerada pelo painel solar, esta placa também recarrega, automaticamente, de uma bateria de backup acoplaca ao sistema.</p>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="image" style="width: 300px">
+					<img src="<%= static_path(@conn, "/solar/images/panel.jpg") %>">
+				</div>
+				<div class="content">
+					<span class="header">Painel Solar</span>
+					<div class="meta">
+						<span></span>
+					</div>
+					<div class="description">
+						<p>Painel fotovoltaico para captação de energia solar.</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
