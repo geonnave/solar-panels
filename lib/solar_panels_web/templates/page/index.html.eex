@@ -1,15 +1,15 @@
 
 <div class="ui container">
 	<div class="ui top attached tabular menu">
-	  <a class="active item" data-tab="first">Simulação</a>
-	  <a class="item" data-tab="second">Painel Real</a>
+	  <a class="active item" data-tab="first">Painel Real</a>
+	  <a class="item" data-tab="second">Simulação</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="first">
-		<canvas height="75" id="current-random"></canvas>
-		<canvas height="75" id="voltage-random"></canvas>
-	</div>
-	<div class="ui bottom attached tab segment" data-tab="second">
 		<canvas height="75" id="current-real"></canvas>
 		<canvas height="75" id="voltage-real"></canvas>
+	</div>
+	<div class="ui bottom attached tab segment" data-tab="second">
+		<canvas height="75" id="current-random"></canvas>
+		<canvas height="75" id="voltage-random"></canvas>
 	</div>
 </div>
