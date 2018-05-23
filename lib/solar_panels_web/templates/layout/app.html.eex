@@ -9,8 +9,8 @@
 
     <title>Caninos Solar</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-    <link rel="stylesheet" href="<%= static_path(@conn, "/solar/css/app.css") %>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/solar/css/app.css") %>">
 
   </head>
 
@@ -21,7 +21,7 @@
               <h1 class="ui header" >Paneis Solares by Caninos</h1>
             </div>
             <div class="six wide column" style="margin-top: 10px">
-              <img width="50%" style="float: right;" src="<%= static_path(@conn, "/solar/images/logocaninos.svg") %>">
+              <img width="50%" style="float: right; min-width: 150px" src="<%= static_path(@conn, "/solar/images/logocaninos.svg") %>">
             </div>
           </div>
 

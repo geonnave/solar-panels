@@ -6,12 +6,12 @@
 		<a class="item" data-tab="about">About</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="real">
-		<canvas height="75" id="current-real"></canvas>
-		<canvas height="75" id="voltage-real"></canvas>
+		<canvas style="height: 220px; width: 100%" id="current-real"></canvas>
+		<canvas style="height: 220px; width: 100%" id="voltage-real"></canvas>
 	</div>
 	<div class="ui bottom attached tab segment" data-tab="random">
-		<canvas height="75" id="current-random"></canvas>
-		<canvas height="75" id="voltage-random"></canvas>
+		<canvas style="height: 220px; width: 100%" id="current-random"></canvas>
+		<canvas style="height: 220px; width: 100%" id="voltage-random"></canvas>
 	</div>
 	<div class="ui bottom attached  tab segment" data-tab="about">
 		<div class="ui grid">
