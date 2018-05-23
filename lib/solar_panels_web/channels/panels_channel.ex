@@ -5,6 +5,9 @@ defmodule SolarPanelsWeb.PanelsChannel do
     {:ok, socket}
   end
   def join("panels:real", _payload, socket) do
+    # for reading <- SolarPanels.Storage.read_from_file do
+    #   SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", reading
+    # end
     {:ok, socket}
   end
   def join("panels:aggregated", _payload, socket) do

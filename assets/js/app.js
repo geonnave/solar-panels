@@ -1,6 +1,8 @@
 import "phoenix_html"
 import socket from "./socket"
 
+$('.ui.dropdown').dropdown();
+
 var panels = {
   "daily": {
     "name": 'panels:daily',
@@ -27,18 +29,18 @@ var channelOn = function(panel) {
     console.log(payload)
 
     panels[panel].buffer.current.push({
-      x: payload.current.timestamp * 1000,
-      y: payload.current.value
+      x: payload.timestamp * 1000,
+      y: payload.current
     });
 
     panels[panel].buffer.voltage.push({
-      x: payload.voltage.timestamp * 1000,
-      y: payload.voltage.value
+      x: payload.timestamp * 1000,
+      y: payload.voltage
     });
   });
 }
 
-channelOn("daily");
+// channelOn("daily");
 channelOn("real");
 
 var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel) {

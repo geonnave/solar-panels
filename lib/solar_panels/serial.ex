@@ -34,11 +34,7 @@ defmodule SolarPanels.Serial do
     Logger.debug "will broadcast #{data}"
     case Poison.decode(data) do
       {:ok, data} ->
-        data = put_in data, ["timestamp"], SolarPanels.now_unix()
-        payload = %{
-          "current" => %{"value" => data["current"], "timestamp" => data["timestamp"]},
-          "voltage" => %{"value" => data["voltage"], "timestamp" => data["timestamp"]}
-        }
+        payload = put_in(data, ["timestamp"], SolarPanels.now_unix())
         SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", payload
         SolarPanels.Storage.save_to_file(data)
 

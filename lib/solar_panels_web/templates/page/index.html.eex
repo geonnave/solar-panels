@@ -84,3 +84,11 @@
 	</div>
 </div>
 <br>
+<%# <div class="ui two column centered grid">
+  <div class="ui buttons centered">
+    <button class="ui button active">1 Minuto</button>
+    <button class="ui button">1 Hora</button>
+    <button class="ui button">1 Dia</button>
+  </div>
+</div>
+<br> %>
