@@ -21,7 +21,7 @@
               <h1 class="ui header" >Paneis Solares by Caninos</h1>
             </div>
             <div class="six wide column" style="margin-top: 10px">
-              <img width="50%" style="float: right; min-width: 150px" src="<%= static_path(@conn, "/solar/images/logocaninos.svg") %>">
+              <img width="50%" style="float: right; min-width: 120px" src="<%= static_path(@conn, "/solar/images/logocaninos.svg") %>">
             </div>
           </div>
 

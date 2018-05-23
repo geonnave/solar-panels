@@ -2,10 +2,10 @@ import "phoenix_html"
 import socket from "./socket"
 
 var panels = {
-  "random": {
-    "name": 'panels:random',
-    "idAappend": '-random',
-    "channel": socket.channel('panels:random', {}),
+  "daily": {
+    "name": 'panels:daily',
+    "idAappend": '-daily',
+    "channel": socket.channel('panels:daily', {}),
     "buffer": {
       "current": [],
       "voltage": []
@@ -38,14 +38,14 @@ var channelOn = function(panel) {
   });
 }
 
-channelOn("random");
+channelOn("daily");
 channelOn("real");
 
 var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel) {
   var id = buffer_name + panels[panel].idAappend;
   var ctx = document.getElementById(id).getContext('2d');
   console.log(ctx)
-  var chart = new Chart(ctx, {
+  return new Chart(ctx, {
       type: 'line',
       data: {
           datasets: [{
@@ -80,12 +80,12 @@ var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel
   });
 }
 
-panels.random.channel.join();
+// panels.daily.channel.join();
 panels.real.channel.join();
-makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "random");
-makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "random");
-makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real");
-makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real");
+// makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "daily");
+// makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "daily");
+var realCurrentChart = makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real");
+var realVoltageChart = makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real");
 
 
 

@@ -2,16 +2,16 @@
 <div class="ui container">
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="real">Painel Solar</a>
-		<%# <a class="item" data-tab="random">Simulação</a> %>
+		<%# <a class="item" data-tab="daily">Simulação</a> %>
 		<a class="item" data-tab="about">About</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="real">
-		<canvas style="height: 220px; width: 100%" id="current-real"></canvas>
 		<canvas style="height: 220px; width: 100%" id="voltage-real"></canvas>
+		<canvas style="height: 220px; width: 100%" id="current-real"></canvas>
 	</div>
-	<div class="ui bottom attached tab segment" data-tab="random">
-		<canvas style="height: 220px; width: 100%" id="current-random"></canvas>
-		<canvas style="height: 220px; width: 100%" id="voltage-random"></canvas>
+	<div class="ui bottom attached tab segment" data-tab="daily">
+		<canvas style="height: 220px; width: 100%" id="voltage-daily"></canvas>
+		<canvas style="height: 220px; width: 100%" id="current-daily"></canvas>
 	</div>
 	<div class="ui bottom attached  tab segment" data-tab="about">
 		<div class="ui grid">
