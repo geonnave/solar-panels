@@ -3,7 +3,7 @@
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="real">Painel Solar</a>
 		<%# <a class="item" data-tab="random">Simulação</a> %>
-		<a class="item" data-tab="about">Sobre</a>
+		<a class="item" data-tab="about">About</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="real">
 		<canvas height="75" id="current-real"></canvas>
@@ -16,12 +16,13 @@
 	<div class="ui bottom attached  tab segment" data-tab="about">
 		<div class="ui grid">
 		  <div class="six wide column">
-			<h2>Aplicação Painéis Solares by Caninos Loucos</h3>
+			<h2>Solar Panels Telemetry by Caninos Loucos</h3>
 			<div class="meta">
 				<span></span>
 			</div>
 			<div class="description">
-				<p>Painel solar monitorado em tempo real integrado com uma placa Labrador, que realiza a coleta e processamento, além de prover visualização em tempo real dos dados.</p>
+				<%# <p>Painel solar monitorado em tempo real integrado com uma placa Labrador, que realiza a coleta e processamento, além de prover visualização em tempo real dos dados.</p> %>
+				<p>Real time solar panel monitoring integrated with a Labrador board, which collects, processes, and provides real time visualization of current and voltage.</p>
 			</div>
 			<div class="extra">
 				<%# Additional Details %>
@@ -38,12 +39,13 @@
 					<img src="<%= static_path(@conn, "/solar/images/labrador2.jpg") %>">
 				</div>
 				<div class="content">
-					<span class="header">Placa Labrador</span>
+					<span class="header">Labrador Board</span>
 					<div class="meta">
 						<span></span>
 					</div>
 					<div class="description">
-						<p>A primeira SBC (Single Board Computer) aberta projetada e fabricada no Brasil. Seu papel no projeto inclui a coleta e armazenamento de dados de uma ou mais placas medidoras, e a exibição dos dados em tempo real através de uma interface web.</p>
+						<%# <p>A primeira SBC (Single Board Computer) aberta projetada e fabricada no Brasil. Seu papel no projeto inclui a coleta e armazenamento de dados de uma ou mais placas medidoras, e a exibição dos dados em tempo real através de uma interface web.</p> %>
+						<p>The first open SBC (Single Board Computer) designed and manufactured in Brazil. In this project, the Labrador board performs data acquisition from one or more sensoring boards, data storage, and real time data visualization on a web page served from the board itself.</p>
 					</div>
 				</div>
 			</div>
@@ -52,12 +54,14 @@
 					<img src="<%= static_path(@conn, "/solar/images/monitoring.jpg") %>">
 				</div>
 				<div class="content">
-					<span class="header">Placa de monitoramento</span>
+					<%# <span class="header">Placa de monitoramento</span> %>
+					<span class="header">Sensoring Board</span>
 					<div class="meta">
 						<span></span>
 					</div>
 					<div class="description">
-						<p>Placa desenvolvida pelo LSI-TEC para medição de Corrente, Voltagem e Temperatura de painéis solares. Além de ser alimentada pela própria energia gerada pelo painel solar, esta placa também recarrega automaticamente uma bateria de backup acoplada ao sistema.</p>
+						<%# <p>Placa desenvolvida pelo LSI-TEC para medição de Corrente, Voltagem e Temperatura de painéis solares. Além de ser alimentada pela própria energia gerada pelo painel solar, esta placa também recarrega automaticamente uma bateria de backup acoplada ao sistema.</p> %>
+						<p>Developed by LSI-TEC, this board is designed to measure Current, Voltage and Temperature of solar panels. The board is powered by the solar panel energy, and has a backup battery which is automatically recharged when the charging level drops below 50%.</p>
 					</div>
 				</div>
 			</div>
@@ -66,12 +70,13 @@
 					<img src="<%= static_path(@conn, "/solar/images/panel.jpg") %>">
 				</div>
 				<div class="content">
-					<span class="header">Painel Solar</span>
+					<span class="header">Solar Panel</span>
 					<div class="meta">
 						<span></span>
 					</div>
 					<div class="description">
-						<p>Painel fotovoltaico para captação de energia solar.</p>
+						<%# <p>Painel fotovoltaico para captação de energia solar.</p> %>
+						<p>Photovoltaic panel for solar energy harvesting.</p>
 					</div>
 				</div>
 			</div>

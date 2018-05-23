@@ -82,10 +82,10 @@ var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel
 
 panels.random.channel.join();
 panels.real.channel.join();
-makeChart('current', "Corrente", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "random");
-makeChart('voltage', "Voltagem", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "random");
-makeChart('current', "Corrente", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real");
-makeChart('voltage', "Voltagem", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real");
+makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "random");
+makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "random");
+makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real");
+makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real");
 
 
 
