@@ -36,7 +36,7 @@ defmodule SolarPanels.Serial do
       {:ok, data} ->
         payload = put_in(data, ["timestamp"], SolarPanels.now_unix())
         SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", payload
-        SolarPanels.Storage.save_to_file(data)
+        SolarPanels.Storage.save_to_file(payload)
 
       {:error, reason} ->
         Logger.warn "Could not parse data because of reason #{inspect reason}"
