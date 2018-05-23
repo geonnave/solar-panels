@@ -17,7 +17,7 @@ defmodule SolarPanels.Random do
       "current" => :rand.uniform(),
       "voltage" => :rand.uniform(),
     }
-    SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", payload
+    SolarPanelsWeb.Endpoint.broadcast! "panels:random", "value", payload
     Process.send_after(__MODULE__, :broadcast, 3_000)
     {:noreply, state}
   end
