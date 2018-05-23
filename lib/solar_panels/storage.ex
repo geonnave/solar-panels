@@ -31,11 +31,12 @@ defmodule SolarPanels.Storage do
   end
 
   def init(_opts) do
-    {:ok, %{last_minute_saved: Time.utc_now.minute - 1}}
+    {:ok, %{last_saved: Time.utc_now}}
   end
 
-  def handle_cast({:save_to_file, data}, %{last_minute_saved: last_minute_saved}) do
-    if Time.utc_now.minute != last_minute_saved do
+  def handle_cast({:save_to_file, data}, %{last_saved: last_saved}) do
+    if more_than_five_minutes?(last_saved) do
+      SolarPanelsWeb.Endpoint.broadcast! "panels:daily", "value", data
       data = serialize(data)
       filename = today_filename()
       Logger.info("Saving #{inspect data} to file #{filename}")
@@ -45,9 +46,9 @@ defmodule SolarPanels.Storage do
         IO.write(file, data)
       end)
 
-      {:noreply, %{last_minute_saved: Time.utc_now.minute}}
+      {:noreply, %{last_saved: Time.utc_now}}
     else
-      {:noreply, %{last_minute_saved: last_minute_saved}}
+      {:noreply, %{last_saved: last_saved}}
     end
   end
 
@@ -59,5 +60,9 @@ defmodule SolarPanels.Storage do
 
   def today_filename() do
     "readings_#{Date.utc_today |> Date.to_string}.csv"
+  end
+
+  def more_than_five_minutes?(last_saved) do
+    Time.diff(Time.utc_now, last_saved) > 60 * 5
   end
 end

@@ -11,7 +11,7 @@ defmodule SolarPanels.Blockchain do
   end
 
   def init(_) do
-    socket_opts = [:binary, active: false, nodelay: true, packet: :raw]
+    socket_opts = [:binary, active: false]
     {:ok, socket} = :gen_tcp.connect('127.0.0.1', 1735, socket_opts)
     Logger.info "Connected to socket #{inspect socket}"
     {:ok, socket}
@@ -20,6 +20,7 @@ defmodule SolarPanels.Blockchain do
   def handle_cast({:add_transaction, data}, socket) do
     Logger.debug "Transaction data is #{data}"
     IO.inspect :gen_tcp.send(socket, data)
+    IO.inspect :gen_tcp.close(socket)
     {:noreply, socket}
   end
 end

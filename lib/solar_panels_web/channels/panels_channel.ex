@@ -1,15 +1,14 @@
 defmodule SolarPanelsWeb.PanelsChannel do
   use SolarPanelsWeb, :channel
 
-  def join("panels:random", _payload, socket) do
+  def join("panels:daily", _payload, socket) do
     {:ok, socket}
   end
+
   def join("panels:real", _payload, socket) do
-    # for reading <- SolarPanels.Storage.read_from_file do
-    #   SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", reading
-    # end
     {:ok, socket}
   end
+
   def join("panels:aggregated", _payload, socket) do
     {:ok, socket}
   end
@@ -17,6 +16,27 @@ defmodule SolarPanelsWeb.PanelsChannel do
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("ping", payload, socket) do
+    {:reply, {:ok, payload}, socket}
+  end
+
+  def handle_in("get_daily", payload, socket) do
+    Task.start(fn ->
+      # {_, readings} =
+      #   SolarPanels.Storage.read_from_file
+      #   |> Enum.reduce({0, []}, fn x, {i, acc} ->
+      #     if i > 10 do
+      #       {0, [x | acc]}
+      #     else
+      #       {i + 1, acc}
+      #     end
+      #   end)
+
+      for reading <- Enum.reverse(SolarPanels.Storage.read_from_file) do
+      # for reading <- readings do
+        # Process.sleep(200)
+        SolarPanelsWeb.Endpoint.broadcast! "panels:daily", "value", reading
+      end
+    end)
     {:reply, {:ok, payload}, socket}
   end
 

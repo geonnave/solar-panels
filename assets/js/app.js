@@ -1,8 +1,6 @@
 import "phoenix_html"
 import socket from "./socket"
 
-$('.ui.dropdown').dropdown();
-
 var panels = {
   "daily": {
     "name": 'panels:daily',
@@ -40,10 +38,10 @@ var channelOn = function(panel) {
   });
 }
 
-// channelOn("daily");
+channelOn("daily");
 channelOn("real");
 
-var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel) {
+var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel, duration) {
   var id = buffer_name + panels[panel].idAappend;
   var ctx = document.getElementById(id).getContext('2d');
   console.log(ctx)
@@ -69,7 +67,7 @@ var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel
           },
           plugins: {
               streaming: {
-                  duration: 1000 * 60,
+                  duration: duration,
                   onRefresh: function(chart) {
                       Array.prototype.push.apply(
                           chart.data.datasets[0].data, panels[panel].buffer[buffer_name]
@@ -82,14 +80,14 @@ var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel
   });
 }
 
-// panels.daily.channel.join();
+panels.daily.channel.join();
 panels.real.channel.join();
-// makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "daily");
-// makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "daily");
-var realCurrentChart = makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real");
-var realVoltageChart = makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real");
+makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "daily", 1000 * 60 * 60 * 12);
+makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "daily", 1000 * 60 * 60 * 12);
+makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real", 1000 * 60);
+makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real", 1000 * 60);
 
-
+panels.daily.channel.push('get_daily', {});
 
 // var ul = document.getElementById('msg-list');        // list of messages.
 // var name = document.getElementById('name');          // name of message sender
