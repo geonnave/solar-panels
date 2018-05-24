@@ -31,7 +31,8 @@ defmodule SolarPanels.Storage do
   end
 
   def init(_opts) do
-    {:ok, %{last_saved: Time.utc_now}}
+    now = %{minute: minute} = Time.utc_now
+    {:ok, %{last_saved: %{now | minute: minute - 5}}}
   end
 
   def handle_cast({:save_to_file, data}, %{last_saved: last_saved}) do
