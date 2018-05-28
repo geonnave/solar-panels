@@ -6,4 +6,5 @@ body {
 
 .description span {
   word-wrap: break-word;
+  font-family: monospace;
 }

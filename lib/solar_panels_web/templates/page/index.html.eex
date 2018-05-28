@@ -17,8 +17,8 @@
 				<div class="content">
 					<span class="header">Blockchain</span>
 					<div class="description" style="max-width: 100%">
-						<div><strong>Hash Atual </strong><span id="hash"></span></div>
-						<div><strong>Hash Anterior </strong><span id="prev-hash"></span></div>
+						<div><strong>Hash Atual </strong><span id="hash" style="margin-left: 22px"></span></div>
+						<div><strong>Hash Anterior </strong><span id="prev-hash" style="margin-left: 5px"></span></div>
 					</div>
 				</div>
 			</div>
