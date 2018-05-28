@@ -8,6 +8,20 @@
 	<div class="ui bottom attached active tab segment" data-tab="real">
 		<canvas style="height: 220px; width: 100%" id="voltage-real"></canvas>
 		<canvas style="height: 220px; width: 100%" id="current-real"></canvas>
+		<div class="ui items">
+			<div class="item">
+				<div class="image middle aligned">
+					<img src="<%= static_path(@conn, "/solar/images/chain.png") %>">
+				</div>
+				<div class="content">
+					<div class="description" style="max-width: 100%">
+						<div><strong>Hash Atual </strong><span id="hash"></span></div>
+						<div class="ui divider"></div>
+						<div><strong>Hash Anterior </strong><span id="prev-hash"></span></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="ui bottom attached tab segment" data-tab="daily">
 		<canvas height="80" id="voltage-daily"></canvas>

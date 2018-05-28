@@ -24,7 +24,7 @@ var panels = {
 
 var channelOn = function(panel) {
   panels[panel].channel.on('value', function (payload) {
-    console.log(payload)
+    console.log(payload);
 
     panels[panel].buffer.current.push({
       x: payload.timestamp * 1000,
@@ -35,6 +35,11 @@ var channelOn = function(panel) {
       x: payload.timestamp * 1000,
       y: payload.voltage
     });
+
+    if (payload.hash) {
+      document.getElementById("hash").innerHTML = payload.hash;
+      document.getElementById("prev-hash").innerHTML = payload.prev_hash;
+    }
   });
 }
 

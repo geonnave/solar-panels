@@ -6,8 +6,8 @@ defmodule SolarPanels.Blockchain do
     "timestamp" => "",
     "current" => "",
     "voltage" => "",
-    "current_hash" => "",
-    "previous_hash" => ""
+    "hash" => "",
+    "prev_hash" => ""
   }
 
   def add_block(data) do
@@ -42,8 +42,8 @@ defmodule SolarPanels.Blockchain do
           "timestamp" => String.to_integer(ts),
           "current" => Storage.as_float(c),
           "voltage" => Storage.as_float(v),
-          "current_hash" => ch,
-          "previous_hash" => ph
+          "hash" => ch,
+          "prev_hash" => ph
         }
 
       _ ->
