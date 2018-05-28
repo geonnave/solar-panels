@@ -7,11 +7,11 @@ defmodule SolarPanels.Serial do
   end
 
   def close_port do
-    GenServer.cast __MODULE__, :close_port
+    GenServer.cast(__MODULE__, :close_port)
   end
 
   def open_port do
-    GenServer.cast __MODULE__, :open_port
+    GenServer.cast(__MODULE__, :open_port)
   end
 
   def init(_opts) do
@@ -20,33 +20,38 @@ defmodule SolarPanels.Serial do
         {:ok, port_info}
 
       _ ->
-        Logger.info "Serial started, but serial port was not found."
+        Logger.info("Serial started, but serial port was not found.")
         {:ok, nil}
     end
   end
 
   def handle_info({:nerves_uart, _, {:error, _}}, state) do
-    Logger.warn "Serial disconnected. Switchting to random."
+    Logger.warn("Serial disconnected. Switchting to random.")
     {:noreply, state}
   end
 
   def handle_info({:nerves_uart, _, data}, state) do
-    Logger.debug "will broadcast #{data}"
+    Logger.debug("will broadcast #{data}")
+
     case Poison.decode(data) do
       {:ok, data} ->
         payload = put_in(data, ["timestamp"], SolarPanels.now_unix())
-        SolarPanelsWeb.Endpoint.broadcast! "panels:real", "value", payload
-        SolarPanels.Storage.save_to_file(payload)
+        SolarPanels.Storage.save(payload)
+        # SolarPanelsWeb.Endpoint.broadcast!("panels:real", "value", payload)
+
+        data_block = SolarPanels.Storage.serialize_and_add_to_blockchain(payload)
+        SolarPanelsWeb.Endpoint.broadcast!("panels:real", "value", data_block)
 
       {:error, reason} ->
-        Logger.warn "Could not parse data because of reason #{inspect reason}"
+        Logger.warn("Could not parse data because of reason #{inspect(reason)}")
     end
+
     Process.send_after(__MODULE__, :broadcast, 3_000)
     {:noreply, state}
   end
 
   def handle_info(other, state) do
-    Logger.debug "received #{inspect other} with state #{inspect state}"
+    Logger.debug("received #{inspect(other)} with state #{inspect(state)}")
     {:noreply, state}
   end
 
@@ -61,13 +66,13 @@ defmodule SolarPanels.Serial do
         {:noreply, port_info}
 
       _ ->
-        Logger.info "Could not find and open port"
+        Logger.info("Could not find and open port")
         {:noreply, nil}
     end
   end
 
   def find_and_open_port do
-    Nerves.UART.enumerate
+    Nerves.UART.enumerate()
     |> find_serial_4292()
     |> case do
       [{port, _info}] ->
@@ -76,13 +81,19 @@ defmodule SolarPanels.Serial do
 
       [] ->
         {:error, "port not available"}
-      end
+    end
   end
 
   def open_port(port) do
-    {:ok, pid} = Nerves.UART.start_link
-    Nerves.UART.open(pid, port, speed: 230400, active: false)
-    Nerves.UART.configure(pid, active: true, framing: {Nerves.UART.Framing.Line, separator: <<3, 2>>})
+    {:ok, pid} = Nerves.UART.start_link()
+    Nerves.UART.open(pid, port, speed: 230_400, active: false)
+
+    Nerves.UART.configure(
+      pid,
+      active: true,
+      framing: {Nerves.UART.Framing.Line, separator: <<3, 2>>}
+    )
+
     pid
   end
 

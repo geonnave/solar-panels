@@ -6,10 +6,11 @@ defmodule SolarPanelsWeb.SensorReadingsController do
       id: panel_id,
       current: params["current"],
       voltage: params["voltage"],
-      timestamp: params["timestamp"],
+      timestamp: params["timestamp"]
     }
+
     SolarPanels.Remote.new_reading(panel_id, panel_data)
 
-    json conn, panel_data
+    json(conn, panel_data)
   end
 end

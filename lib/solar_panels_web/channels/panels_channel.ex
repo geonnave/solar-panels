@@ -31,19 +31,20 @@ defmodule SolarPanelsWeb.PanelsChannel do
       #     end
       #   end)
 
-      for reading <- Enum.reverse(SolarPanels.Storage.read_from_file) do
-      # for reading <- readings do
+      for reading <- Enum.reverse(SolarPanels.Storage.read_from_file()) do
+        # for reading <- readings do
         # Process.sleep(200)
-        SolarPanelsWeb.Endpoint.broadcast! "panels:daily", "value", reading
+        SolarPanelsWeb.Endpoint.broadcast!("panels:daily", "value", reading)
       end
     end)
+
     {:reply, {:ok, payload}, socket}
   end
 
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (room:lobby).
   def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+    broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
 end

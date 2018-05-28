@@ -6,8 +6,8 @@ defmodule SolarPanels.Storage do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def save_to_file(data) do
-    GenServer.cast __MODULE__, {:save_to_file, data}
+  def save(data) do
+    GenServer.cast(__MODULE__, {:save, data})
   end
 
   def read_from_file do
@@ -22,7 +22,7 @@ defmodule SolarPanels.Storage do
             [ts, c, v] ->
               data = %{"timestamp" => ts, "current" => c, "voltage" => v}
               [data | acc]
-            
+
             _ ->
               acc
           end
@@ -31,39 +31,65 @@ defmodule SolarPanels.Storage do
   end
 
   def init(_opts) do
-    now = %{minute: minute} = Time.utc_now
+    now = %{minute: minute} = Time.utc_now()
     {:ok, %{last_saved: %{now | minute: minute - 5}}}
   end
 
-  def handle_cast({:save_to_file, data}, %{last_saved: last_saved}) do
+  def handle_cast({:save, data}, %{last_saved: last_saved}) do
     if more_than_five_minutes?(last_saved) do
-      SolarPanelsWeb.Endpoint.broadcast! "panels:daily", "value", data
-      data = serialize(data)
-      filename = today_filename()
-      Logger.info("Saving #{inspect data} to file #{filename}")
+      serialize_and_save_to_file(data)
+      SolarPanelsWeb.Endpoint.broadcast!("panels:daily", "value", data)
 
-      Path.join(:code.priv_dir(:solar_panels), filename)
-      |> File.open([:append], fn file ->
-        IO.write(file, data)
-      end)
+      # serialize_and_save_to_file(data)
+      # data_block = serialize_and_add_to_blockchain(data)
+      # SolarPanelsWeb.Endpoint.broadcast!("panels:daily", "value", data_block)
 
-      {:noreply, %{last_saved: Time.utc_now}}
+      {:noreply, %{last_saved: Time.utc_now()}}
     else
       {:noreply, %{last_saved: last_saved}}
     end
   end
 
-  def serialize(%{"timestamp" => ts, "current" => c, "voltage" => v}) do
-    c = :erlang.float_to_binary c, decimals: 16
-    v = :erlang.float_to_binary v, decimals: 16
-    "#{ts},#{c},#{v}\n"
+  def serialize_and_add_to_blockchain(data) do
+    data_socket = serialize(data, :socket)
+    SolarPanels.Blockchain.add_block(data_socket)
+  end
+
+  def serialize_and_save_to_file(data) do
+    data_csv = serialize(data, :csv)
+    filename = today_filename()
+    Logger.info("Saving #{inspect(data_csv)} to file #{filename}")
+    save_to_file(data_csv, filename)
+  end
+
+  def save_to_file(data, filename) do
+    Path.join(:code.priv_dir(:solar_panels), filename)
+    |> File.open([:append], fn file ->
+      IO.write(file, data)
+    end)
+  end
+
+  def serialize(%{"timestamp" => ts, "current" => c, "voltage" => v}, :csv) do
+    "#{ts},#{as_string(c)},#{as_string(v)}\n"
+  end
+
+  def serialize(%{"timestamp" => ts, "current" => c, "voltage" => v}, :socket) do
+    "#{as_string(v)} #{as_string(c)} #{ts} "
   end
 
   def today_filename() do
-    "readings_#{Date.utc_today |> Date.to_string}.csv"
+    "readings_#{Date.utc_today() |> Date.to_string()}.csv"
   end
 
   def more_than_five_minutes?(last_saved) do
-    Time.diff(Time.utc_now, last_saved) > 60 * 5
+    Time.diff(Time.utc_now(), last_saved) > 60 * 5
+  end
+
+  def as_string(float) do
+    :erlang.float_to_binary(float, decimals: 16)
+  end
+
+  def as_float(binary) do
+    :erlang.binary_to_float(binary)
   end
 end

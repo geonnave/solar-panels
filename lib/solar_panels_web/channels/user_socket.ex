@@ -3,10 +3,10 @@ defmodule SolarPanelsWeb.UserSocket do
 
   ## Channels
   # channel "room:*", SolarPanelsWeb.RoomChannel
-  channel "panels:*", SolarPanelsWeb.PanelsChannel
+  channel("panels:*", SolarPanelsWeb.PanelsChannel)
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport(:websocket, Phoenix.Transports.WebSocket)
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
