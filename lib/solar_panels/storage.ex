@@ -31,12 +31,12 @@ defmodule SolarPanels.Storage do
   end
 
   def init(_opts) do
-    now = %{minute: minute} = Time.utc_now()
+    now = %{minute: minute} = DateTime.utc_now()
     {:ok, %{last_saved: %{now | minute: minute - 5}}}
   end
 
   def handle_cast({:save, data}, %{last_saved: last_saved}) do
-    if more_than_five_minutes?(last_saved) do
+    if more_than_five_minutes?(last_saved) or a_day_has_passed?(last_saved) do
       serialize_and_save_to_file(data)
       SolarPanelsWeb.Endpoint.broadcast!("panels:daily", "value", data)
 
@@ -44,7 +44,7 @@ defmodule SolarPanels.Storage do
       # data_block = serialize_and_add_to_blockchain(data)
       # SolarPanelsWeb.Endpoint.broadcast!("panels:daily", "value", data_block)
 
-      {:noreply, %{last_saved: Time.utc_now()}}
+      {:noreply, %{last_saved: DateTime.utc_now()}}
     else
       {:noreply, %{last_saved: last_saved}}
     end
@@ -81,8 +81,13 @@ defmodule SolarPanels.Storage do
     "readings_#{Date.utc_today() |> Date.to_string()}.csv"
   end
 
+  @five_minutes 60 * 5
   def more_than_five_minutes?(last_saved) do
-    Time.diff(Time.utc_now(), last_saved) > 60 * 5
+    DateTime.diff(DateTime.utc_now(), last_saved) > @five_minutes
+  end
+
+  def a_day_has_passed?(last_saved) do
+    DateTime.utc_now.day != last_saved.day
   end
 
   def as_string(float) do

@@ -23,7 +23,7 @@ defmodule SolarPanels.Blockchain do
             parse_block(data)
 
           {:error, _reason} ->
-            @empty_block
+            data
         end
 
       :gen_tcp.close(socket)
