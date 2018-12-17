@@ -88,9 +88,9 @@ var makeChart = function(buffer_name, label, borderColor, backgroundColor, panel
 panels.daily.channel.join();
 panels.real.channel.join();
 makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "daily", 1000 * 60 * 60 * 12);
-makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "daily", 1000 * 60 * 60 * 12);
+makeChart('voltage', "Tensão (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "daily", 1000 * 60 * 60 * 12);
 makeChart('current', "Corrente (A)", 'rgb(255, 99, 132)', 'rgba(255, 99, 132, 0.5)', "real", 1000 * 60);
-makeChart('voltage', "Voltagem (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real", 1000 * 60);
+makeChart('voltage', "Tensão (V)", 'rgb(54, 162, 235)', 'rgba(54, 162, 235, 0.5)', "real", 1000 * 60);
 
 panels.daily.channel.push('get_daily', {});
 

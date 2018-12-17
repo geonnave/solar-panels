@@ -20,7 +20,7 @@
     <div class="ui container" style="max-width: 960px; margin: 0 auto">
           <div class="ui grid">
             <div class="ten wide column" style="margin-top: 20px">
-              <h1 class="ui header" >Paneis Solares by Caninos</h1>
+              <h1 class="ui header" >Painéis Solares by Caninos</h1>
             </div>
             <div class="six wide column" style="margin-top: 10px">
               <img width="50%" style="float: right; min-width: 120px" src="<%= static_path(@conn, "/solar/images/logocaninos.svg") %>">
