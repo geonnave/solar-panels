@@ -13,7 +13,7 @@ defmodule SolarPanels.Application do
       # Start your own worker by calling: SolarPanels.Worker.start_link(arg1, arg2, arg3)
       {SolarPanels.Random, []},
       {SolarPanels.Serial, []},
-      {SolarPanels.Storage, []}
+      # {SolarPanels.Storage, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

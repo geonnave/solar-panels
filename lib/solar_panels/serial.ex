@@ -36,11 +36,10 @@ defmodule SolarPanels.Serial do
     case Poison.decode(data) do
       {:ok, data} ->
         payload = put_in(data, ["timestamp"], SolarPanels.now_unix())
-        SolarPanels.Storage.save(payload)
-        # SolarPanelsWeb.Endpoint.broadcast!("panels:real", "value", payload)
-
-        data_block = SolarPanels.Storage.serialize_and_add_to_blockchain(payload)
-        SolarPanelsWeb.Endpoint.broadcast!("panels:real", "value", data_block)
+        # SolarPanels.Storage.save(payload)
+        # data_block = SolarPanels.Storage.serialize_and_add_to_blockchain(payload)
+        # SolarPanelsWeb.Endpoint.broadcast!("panels:real", "value", data_block)
+        SolarPanelsWeb.Endpoint.broadcast!("panels:real", "value", payload)
 
       {:error, reason} ->
         Logger.warn("Could not parse data because of reason #{inspect(reason)}")
@@ -76,7 +75,7 @@ defmodule SolarPanels.Serial do
     |> find_serial_4292()
     |> case do
       [{port, _info}] ->
-        Logger.info("Found port at #{port}")
+        Logger.debug("Found port at #{port}")
         {:ok, {port, open_port(port)}}
 
       [] ->
@@ -94,6 +93,7 @@ defmodule SolarPanels.Serial do
       framing: {Nerves.UART.Framing.Line, separator: <<3, 2>>}
     )
 
+    Logger.debug("Serial port #{port} opened with pid #{inspect pid}")
     pid
   end
 
