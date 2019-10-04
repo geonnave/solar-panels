@@ -25,7 +25,7 @@ var append = function(html) {
 }
 
 var appendTitle = function(title) {
-  append('<h4 style="text-align: center; margin: ">' + title + '</h4><br>')
+  append('<h4 style="text-align: center; margin: 0 auto; font-size: 24px">' + title + '</h4><br>')
 }
 
 var appendCanvas = function(canvas_id) {
