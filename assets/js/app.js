@@ -96,9 +96,6 @@ var channelOn = function(panel) {
   });
 }
 
-// channelOn("daily");
-channelOn("real");
-
 var makeChart = function(buffer_id, buffer_name, label, border_color, color, panel, duration) {
   var id = buffer_id + buffer_name + panels[panel].idAappend;
   var ctx = document.getElementById(id).getContext('2d');
@@ -141,4 +138,5 @@ panels.daily.channel.join();
 panels.real.channel.join();
 
 
-// makeChart('voltage', "Tensão (V)", "real", 1000 * 60);
+channelOn("real");
+
